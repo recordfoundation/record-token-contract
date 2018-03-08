@@ -1,0 +1,16 @@
+{
+  "name": "Record Coin",
+  "version": "1.0.0",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/recordfoundation/ico-smartcontract-record.git"
+  },
+  "license": "ISC",
+  "scripts": {},
+  "author": "Record Foundation",
+  "dependencies": {
+    "zeppelin-solidity": "^1.7.0"
+  },
+  "devDependencies": {}
+}

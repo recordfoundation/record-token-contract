@@ -10,6 +10,7 @@
   "scripts": {},
   "author": "Record Foundation",
   "dependencies": {
+    "web3": "^1.0.0-beta.30",
     "zeppelin-solidity": "^1.7.0"
   },
   "devDependencies": {}

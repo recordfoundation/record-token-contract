@@ -1,4 +1,4 @@
-pragma solidity ^0.4.17;
+pragma solidity ^0.4.18;
 
 import './RecordCoin.sol';
 import 'zeppelin-solidity/contracts/crowdsale/Crowdsale.sol';

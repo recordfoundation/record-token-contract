@@ -1,5 +1,5 @@
 {
-  "name": "Record Coin",
+  "name": "ico-smartcontract-record",
   "version": "1.0.0",
   "description": "",
   "repository": {
@@ -7,11 +7,22 @@
     "url": "https://github.com/recordfoundation/ico-smartcontract-record.git"
   },
   "license": "ISC",
-  "scripts": {},
+  "scripts": {
+    "console": "./node_modules/.bin/truffle develop",
+    "test": "./node_modules/.bin/truffle test"
+  },
   "author": "Record Foundation",
   "dependencies": {
     "web3": "^1.0.0-beta.30",
-    "zeppelin-solidity": "^1.7.0"
+    "zeppelin-solidity": "1.7.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-register": "^6.26.0",
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "chai-bignumber": "^2.0.2",
+    "truffle": "^4.1.3"
+  }
 }

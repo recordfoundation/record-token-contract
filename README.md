@@ -10,12 +10,12 @@ One of distinctive features of the smart-contract is the fact that token price i
 ## The Crowdsale Specification
 *	Record token is ERC-20 compliant.
 *   Allocation of Appics tokens goes in the following way:
-  *  Record 20 %
-	*  Ecosystem 20 %
-	*  Steemit 5 %
-	*  Bounty 5 %
-	*  PublicIco 50 %
-
+* ICO 50%
+* Founders and Team 18%
+* RecordFarm Ecosystem 15%
+* Investors 5%
+* Advisors and Ambassadors 8%
+* Bounty Program 4%
 
 ## Code
 

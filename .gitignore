@@ -34,3 +34,5 @@ public/Admin/bundle.js
 public/Admin/bundle.js.map
 public/Sellev/bundle.js
 public/Sellev/bundle.js.map
+truffle.js
+truffle-config.js

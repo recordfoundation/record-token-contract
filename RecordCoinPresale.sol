@@ -1,13 +1,13 @@
 pragma solidity ^0.4.21;
 
-import './RecordCoin.sol';
+import './RECORDToken.sol';
 import 'zeppelin-solidity/contracts/crowdsale/emission/MintedCrowdsale.sol';
 import 'zeppelin-solidity/contracts/crowdsale/validation/TimedCrowdsale.sol';
 import "zeppelin-solidity/contracts/crowdsale/validation/CappedCrowdsale.sol";
 
-contract RecordCoinCrowdsale is MintedCrowdsale, TimedCrowdsale, CappedCrowdsale {
+contract RecordCoinPresale is MintedCrowdsale, TimedCrowdsale, CappedCrowdsale {
 
-    function RecordCoinCrowdsale (
+    function RecordCoinPresale (
         uint256 _startTime, // crowdSale 시작일
         uint256 _endTime, // 종료일
         uint256 _rate, // 이더-코인 교환비. 토큰 발행량 = 이더 x rate

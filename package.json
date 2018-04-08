@@ -13,7 +13,9 @@
   },
   "author": "Record Foundation",
   "dependencies": {
+    "drizzle": "^1.1.0",
     "truffle": "^4.1.5",
+    "truffle-contract": "^3.0.4",
     "web3": "^0.20.1",
     "zeppelin-solidity": "1.8.0"
   },

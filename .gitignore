@@ -36,3 +36,5 @@ public/Sellev/bundle.js
 public/Sellev/bundle.js.map
 truffle.js
 truffle-config.js
+privateNetwork/
+/privateNetwork/

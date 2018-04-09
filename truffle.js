@@ -7,7 +7,8 @@ module.exports = {
             host: "localhost",
             port: 8123,
             network_id: "*", // Match any network id
-            gas: 4712388
+            gas: 4712388,
+            from: "0xa34480bFd8E16B56E7759b2C44AC81B98337FD38", // CompanyFund
         },
         live: {
             host: "localhost",

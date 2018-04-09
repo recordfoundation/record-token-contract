@@ -50,7 +50,6 @@ contract RECORDICO {
     address public Controller_Address1; // First address that is used to buy tokens for other cryptos
     address public Controller_Address2; // Second address that is used to buy tokens for other cryptos
     address public Controller_Address3; // Third address that is used to buy tokens for other cryptos
-    address public Oracle; // Oracle address
 
     // Possible ICO statuses
     enum StatusICO {
@@ -111,12 +110,6 @@ contract RECORDICO {
     event LogBuyForInvestor(address investor, uint256 aidValue, string txHash);
     event LogRegister(address investor, string key);
 
-    // Modifiers
-    // Allows execution by the oracle only
-    modifier oracleOnly {
-        require(msg.sender == Oracle);
-        _;
-    }
     // Allows execution by the contract manager only
     modifier managerOnly {
         require(msg.sender == Manager);
@@ -166,8 +159,7 @@ contract RECORDICO {
         address _Manager,
         address _Controller_Address1,
         address _Controller_Address2,
-        address _Controller_Address3,
-        address _Oracle
+        address _Controller_Address3
     )
     public {
         Company = _Company;
@@ -180,14 +172,13 @@ contract RECORDICO {
         Controller_Address1 = _Controller_Address1;
         Controller_Address2 = _Controller_Address2;
         Controller_Address3 = _Controller_Address3;
-        Oracle = _Oracle;
     }
 
     /**
      *   @dev Set rate of ETH and update token price
      *   @param _RateEth       current ETH rate
      */
-    function setRate(uint256 _RateEth) external oracleOnly {
+    function setRate(uint256 _RateEth) external managerOnly {
         Rate_Eth = _RateEth;
     }
 
@@ -369,25 +360,6 @@ contract RECORDICO {
     }
 
     /**
-     *   @dev Issues tokens for users who made purchases in other cryptocurrencies
-     *   @param _investor     address the tokens will be issued to
-     *   @param _rcdValue     number of RECORD tokens
-     *   @param _txHash       transaction hash of investor's payment
-     */
-    function buyForInvestor(
-        address _investor,
-        uint256 _rcdValue,
-        string _txHash
-    )
-    external
-    controllersOnly
-    startedOnly {
-        buyTokens(_investor, _rcdValue);
-        emit LogBuyForInvestor(_investor, _rcdValue, _txHash);
-    }
-
-
-    /**
      *   @dev Issue tokens for investors who paid in ether
      *   @param _investor     address which the tokens will be issued to
      *   @param _rcdValue     number of RECORD tokens
@@ -398,7 +370,7 @@ contract RECORDICO {
         uint256 total = _rcdValue.add(bonus);
         if (statusICO == StatusICO.PreSaleStarted) {
             require (PreSaleSold.add(total) <= PreSaleHardCap);
-            require(_rcdValue > TENTHOUSENDLIMIT);
+            //require (_rcdValue > TENTHOUSENDLIMIT);
             PreSaleSold = PreSaleSold.add(total);
         }
         if (statusICO == StatusICO.RoundAStarted) {
@@ -447,13 +419,12 @@ contract RECORDICO {
         emit LogRegister(msg.sender, _key);
     }
 
-
     /*
      *   @dev Allows Company withdraw investments when round is over
-
+    */
     function withdrawEther() external managerOnly finishedOnly{
-        //Company.transfer(this.balance);
-    }*/
+        Company.transfer(address(this).balance);
+    }
 
 }
 

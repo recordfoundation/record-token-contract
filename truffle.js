@@ -10,6 +10,12 @@ module.exports = {
             gas: 4712388,
             from: "0xa34480bFd8E16B56E7759b2C44AC81B98337FD38", // CompanyFund
         },
+        ropsten: {
+            host: "localhost",
+            port: 8545,
+            network_id: "3",
+            gas: 4712388,
+        },
         live: {
             host: "localhost",
             port: 80,

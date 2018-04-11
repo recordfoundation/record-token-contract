@@ -38,7 +38,10 @@ contract RECORDICO {
     uint256 public RoundASold = 0;
     uint256 public RoundBSold = 0;
     uint256 public RoundCSold = 0;
-    uint256 constant TENTHOUSENDLIMIT = 66666666666666666666666;
+    uint256 constant PreSaleMinimum = 5000;
+    uint256 constant PreSaleMaximum = 10000000;
+    uint256 constant IcoMinimum = 5000;
+    uint256 constant IcoMaximum = 50000000;
     // Output ethereum addresses
     address public Company;
     address public RECORDFund;
@@ -47,6 +50,11 @@ contract RECORDICO {
     address public AdvisorFund;
     address public BountyFund;
     address public Manager; // Manager controls contract
+
+    uint256 public PreSaleStartTime;
+    uint256 public PreSaleCloseTime;
+    uint256 public IcoStartTime;
+    uint256 public IcoCloseTime;
 
     // Possible ICO statuses
     enum StatusICO {
@@ -57,14 +65,10 @@ contract RECORDICO {
         RoundBStarted,
         RoundCStarted,
         IcoPaused,
-        IcoFinished,
+        IcoFinished
     }
     StatusICO statusICO = StatusICO.Created;
 
-    uint256 public PreSaleStartTime = 1523750400; // 2018.04.15.00:00 GMT
-    uint256 public PreSaleCloseTime = 1524441600; // 2018.04.23.00:00 GMT
-    uint256 public IcoStartTime = 1525046400; // 2018.04.30.00:00 GMT
-    uint256 public IcoCloseTime = 1530403200; // 2018.07.1.00:00 GMT
 
     // Events Log
     event LogStartPreSaleRound();
@@ -186,13 +190,8 @@ contract RECORDICO {
      */
     function finishPreSaleRound() external managerOnly {
         require(statusICO == StatusICO.PreSaleStarted || statusICO == StatusICO.PreSalePaused);
-        uint256 totalAmount = PreSaleSold.mul(100).div(icoPart);
-        RCD.mint(RECORDFund, RECORDPart.mul(totalAmount).div(100));
-        RCD.mint(EcosystemFund, EcosystemPart.mul(totalAmount).div(100));
-        RCD.mint(InvestorFund, InvestorPart.mul(totalAmount).div(100));
-        RCD.mint(AdvisorFund, AdvisorPart.mul(totalAmount).div(100));
-        RCD.mint(BountyFund, BountyPart.mul(totalAmount).div(100));
         statusICO = StatusICO.PreSaleFinished;
+        withdrawEther();
         emit LogFinishPreSaleRound(RECORDFund, EcosystemFund, InvestorFund, AdvisorFund, BountyFund);
 
     }
@@ -212,7 +211,9 @@ contract RECORDICO {
      *   Set ICO status to RoundBStarted
      */
     function startRoundB() external managerOnly {
-        require(statusICO == StatusICO.RoundAFinished || statusICO == StatusICO.RoundBPaused);
+        require(statusICO == StatusICO.RoundAStarted || statusICO == StatusICO.RoundAFinished || statusICO == StatusICO.RoundBPaused);
+        statusICO = StatusICO.RoundAFinished;
+        withdrawEther();
         statusICO = StatusICO.RoundBStarted;
         emit LogStartRoundB();
     }
@@ -221,7 +222,9 @@ contract RECORDICO {
      *   Set ICO status to RoundCStarted
      */
     function startRoundC() external managerOnly {
-        require(statusICO == StatusICO.RoundBFinished || statusICO == StatusICO.RoundCPaused);
+        require(statusICO == StatusICO.RoundBStarted || statusICO == StatusICO.RoundBFinished || statusICO == StatusICO.RoundCPaused);
+        statusICO = StatusICO.RoundBFinished;
+        withdrawEther();
         statusICO = StatusICO.RoundCStarted;
         emit LogStartRoundC();
     }
@@ -233,12 +236,11 @@ contract RECORDICO {
      */
     function finishIco() external managerOnly {
         require(statusICO == StatusICO.RoundCStarted || statusICO == StatusICO.RoundCPaused);
-        uint256 totalAmount = 300000000;
-        RCD.mint(RECORDFund, RECORDPart.mul(totalAmount).div(100));
-        RCD.mint(EcosystemFund, EcosystemPart.mul(totalAmount).div(100));
-        RCD.mint(InvestorFund, InvestorPart.mul(totalAmount).div(100));
-        RCD.mint(AdvisorFund, AdvisorPart.mul(totalAmount).div(100));
-        RCD.mint(BountyFund, BountyPart.mul(totalAmount).div(100));
+        RCD.mint(RECORDFund, RECORDPart.mul(totalAmountOnICO).div(100));
+        RCD.mint(EcosystemFund, EcosystemPart.mul(totalAmountOnICO).div(100));
+        RCD.mint(InvestorFund, InvestorPart.mul(totalAmountOnICO).div(100));
+        RCD.mint(AdvisorFund, AdvisorPart.mul(totalAmountOnICO).div(100));
+        RCD.mint(BountyFund, BountyPart.mul(totalAmountOnICO).div(100));
         statusICO = StatusICO.RoundCFinished;
         emit LogFinishRoundC(RECORDFund, EcosystemFund, InvestorFund, AdvisorFund, BountyFund);
     }
@@ -273,6 +275,7 @@ contract RECORDICO {
         require(_ethValue > 0);
         uint256 _rcdValue;
         _rcdValue = _ethValue.mul(Tokens_Per_Dollar_Numerator).mul(Rate_Eth);
+        require ((PreSaleStartTime < now && PreSaleCloseTime > now) || (IcoStartTime < now && IcoCloseTime > now));
 
         // hardcap: 15,000,000 RCD
         // minimun: 5,000 RCD
@@ -280,35 +283,34 @@ contract RECORDICO {
         if (statusICO == StatusICO.PreSaleStarted) {
             _rcdValue = _rcdValue.div(Tokens_Per_Dollar_Denominator_PreSale);
             require (PreSaleSold.add(_rcdValue) <= PreSaleHardCap);
-            //require (_rcdValue > TENTHOUSENDLIMIT);
+            require (_rcdValue >= PreSaleMinimum);
+            require (_rcdValue <= PreSaleMaximum);
             PreSaleSold = PreSaleSold.add(_rcdValue);
         }
 
         // hardcap: 45,000,000 RCD
         // minimun: 5,000 RCD
         // maximum: 50,000,000 RCD
-        if ((statusICO == StatusICO.RoundAStarted) ||
-            (statusICO == StatusICO.RoundBStarted) ||
-            (statusICO == StatusICO.RoundCStarted)) {
-
-            if (statusICO == StatusICO.RoundAStarted) {
+        if (statusICO == StatusICO.RoundAStarted) {
             _rcdValue = _rcdValue.div(Tokens_Per_Dollar_Denominator_RoundA);
-            if (RoundASold.add(_rcdValue) > RoundAHardCap) {
-
-            }
             require (RoundASold.add(_rcdValue) <= RoundAHardCap);
+            require (_rcdValue >= IcoMinimum);
+            require (_rcdValue <= IcoMaximum);
             RoundASold = RoundASold.add(_rcdValue);
-            }
-            if (statusICO == StatusICO.RoundBStarted) {
+        }
+        if (statusICO == StatusICO.RoundBStarted) {
             _rcdValue = _rcdValue.div(Tokens_Per_Dollar_Denominator_RoundB);
             require (RoundBSold.add(_rcdValue) <= RoundBHardCap);
+            require (_rcdValue >= IcoMinimum);
+            require (_rcdValue <= IcoMaximum);
             RoundBSold = RoundBSold.add(_rcdValue);
-            }
-            if (statusICO == StatusICO.RoundCStarted) {
+        }
+        if (statusICO == StatusICO.RoundCStarted) {
             _rcdValue = _rcdValue.div(Tokens_Per_Dollar_Denominator_RoundC);
             require (RoundCSold.add(_rcdValue) <= RoundCHardCap);
+            require (_rcdValue >= IcoMinimum);
+            require (_rcdValue <= IcoMaximum);
             RoundCSold = RoundCSold.add(_rcdValue);
-            }
         }
         RCD.mint(_investor, _rcdValue);
     }
@@ -324,6 +326,5 @@ contract RECORDICO {
     function withdrawEther() external managerOnly finishedOnly{
         Company.transfer(address(this).balance);
     }
-
 }
 

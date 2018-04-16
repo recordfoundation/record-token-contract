@@ -4,7 +4,6 @@ const RECORDICO = artifacts.require("RECORDICO.sol");
 
 contract('RECORDICO', (accounts) => {
     console.log(accounts);
-
     function randomInteger(min, max) {
         var randonNumber = min - 0.5 + Math.random() * (max - min + 1)
         randonNumber = Math.round(randonNumber);
@@ -78,12 +77,11 @@ contract('RECORDICO', (accounts) => {
 
     it("5. (PRE-SALE ROUND)shouldn't buy, when instment is less then 5000 RCD", async () => {
         console.log("5. (PRE-SALE ROUND)shouldn't buy, when instment is less then 5000 RCD");
-        var etherAmount = web3.toWei('1', 'ether');
+        var etherAmount = web3.toWei('0.5', 'ether');
         var tx = await ICO.sendTransaction({
             from: EthInvestorAddressPreSale1,
             value: etherAmount
         });
-        console.log(tx);
         assert(false, "shouldn't buy, when instment is less then 5000 RCD");
     });
 
@@ -94,16 +92,13 @@ contract('RECORDICO', (accounts) => {
     it("6. (PRE-SALE ROUND)shouldn't buy, when instment is more then 10000000 RCD", async () => {
         console.log("6. (PRE-SALE ROUND)shouldn't buy, when instment is more then 10000000 RCD");
         // !!!!!!!!!! 개발 필요!
-        var etherAmount = web3.toWei('1', 'ether');
+        var etherAmount = web3.toWei('2', 'ether');
         var tx = await ICO.sendTransaction({
             from: EthInvestorAddressPreSale1,
             value: etherAmount
         });
-        console.log(tx);
         assert(false, "shouldn't buy, when instment is more then 10000000 RCD");
     });
-
-
 
     it("7. (PRE-SALE ROUND)shouldn't withdraw Ether when round isn't finished", async () => {
         console.log("7. (PRE-SALE ROUND)shouldn't withdraw Ether when round isn't finished");

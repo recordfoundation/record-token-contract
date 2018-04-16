@@ -1,3 +1,4 @@
+var HDWalletProvider = require("truffle-hdwallet-provider");
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
   // to customize your Truffle configuration!
@@ -8,28 +9,21 @@ module.exports = {
             port: 8123,
             network_id: "*", // Match any network id
             gas: 4712388,
-            from: "0xa34480bFd8E16B56E7759b2C44AC81B98337FD38", // CompanyFund
         },
         ropsten: {
-            host: "localhost",
-            port: 8545,
+            provider: () => {
+                return new HDWalletProvider(mnemonic, "https://ropsten.infura.io/" + infura_apikey);
+            },
             network_id: "3",
             gas: 4712388,
+            gasPrice: 180000000000,
         },
         live: {
-            host: "localhost",
-            port: 80,
+            provider: new HDWalletProvider(mnemonic, "https://mainnet.infura.io/" + infura_apikey),
             network_id: "1", // Ethereum public network
-            //gas: 4712388, //Gas limit used for deploys. Default is 4712388.
-            //gasPrice: 100000000000 //Gas price used for deploys. Default is 100000000000 (100 Shannon).
-            from: "77293f02b7d7c442078bee2e319ed8d75d75ad7f", //From address used during migrations. Defaults to the first available account provided by your Ethereum client.
-            // provider: //Default web3 provider using host and port options: new Web3.providers.HttpProvider("http://<host>:<port>")
+            gas: 550000, //Gas limit used for deploys. Default is 4712388.
+            //gasPrice: 100000000000, //Gas price used for deploys. Default is 100000000000 (100 Shannon).
+            //from: "", //From address used during migrations. Defaults to the first available account provided by your Ethereum client.
         }
-    },
-    solc: {
-        optimizer: {
-            enabled: true,
-            runs: 200
-        }
-    },
+    }
 };

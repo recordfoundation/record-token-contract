@@ -13,13 +13,8 @@ module.exports = function(deployer, network, accounts) {
     console.log('IcoCloseTime', IcoCloseTime);
     deployer.deploy(
         RECORDICO,
-        accounts[0], // Company
-        accounts[1], // RECORD Fund
-        accounts[2], // Ecosystem Fund
-        accounts[3], // Investor Fund
-        accounts[4], // Advisor Fund
-        accounts[5], // Bounty Fund
-        accounts[6], // Manager
+        "", // Company
+        "", // Manager
         PreSaleStartTime,
         PreSaleCloseTime,
         IcoStartTime,

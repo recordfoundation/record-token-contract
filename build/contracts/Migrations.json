@@ -64,10 +64,10 @@
       "type": "function"
     }
   ],
-  "bytecode": "0x6060604052341561000f57600080fd5b60008054600160a060020a033316600160a060020a03199091161790556102318061003b6000396000f3006060604052600436106100615763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416630900f0108114610066578063445df0ac146100945780638da5cb5b146100b9578063fdacd576146100f5575b600080fd5b341561007157600080fd5b61009273ffffffffffffffffffffffffffffffffffffffff6004351661010b565b005b341561009f57600080fd5b6100a76101b6565b60405190815260200160405180910390f35b34156100c457600080fd5b6100cc6101bc565b60405173ffffffffffffffffffffffffffffffffffffffff909116815260200160405180910390f35b341561010057600080fd5b6100926004356101d8565b600080543373ffffffffffffffffffffffffffffffffffffffff908116911614156101b2578190508073ffffffffffffffffffffffffffffffffffffffff1663fdacd5766001546040517c010000000000000000000000000000000000000000000000000000000063ffffffff84160281526004810191909152602401600060405180830381600087803b15156101a157600080fd5b5af115156101ae57600080fd5b5050505b5050565b60015481565b60005473ffffffffffffffffffffffffffffffffffffffff1681565b6000543373ffffffffffffffffffffffffffffffffffffffff908116911614156102025760018190555b505600a165627a7a72305820f163cc5dd9e44dc8903f46999be07b6520a570e19d7406b99b7538e85f3857150029",
-  "deployedBytecode": "0x6060604052600436106100615763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416630900f0108114610066578063445df0ac146100945780638da5cb5b146100b9578063fdacd576146100f5575b600080fd5b341561007157600080fd5b61009273ffffffffffffffffffffffffffffffffffffffff6004351661010b565b005b341561009f57600080fd5b6100a76101b6565b60405190815260200160405180910390f35b34156100c457600080fd5b6100cc6101bc565b60405173ffffffffffffffffffffffffffffffffffffffff909116815260200160405180910390f35b341561010057600080fd5b6100926004356101d8565b600080543373ffffffffffffffffffffffffffffffffffffffff908116911614156101b2578190508073ffffffffffffffffffffffffffffffffffffffff1663fdacd5766001546040517c010000000000000000000000000000000000000000000000000000000063ffffffff84160281526004810191909152602401600060405180830381600087803b15156101a157600080fd5b5af115156101ae57600080fd5b5050505b5050565b60015481565b60005473ffffffffffffffffffffffffffffffffffffffff1681565b6000543373ffffffffffffffffffffffffffffffffffffffff908116911614156102025760018190555b505600a165627a7a72305820f163cc5dd9e44dc8903f46999be07b6520a570e19d7406b99b7538e85f3857150029",
-  "sourceMap": "26:488:0:-;;;178:58;;;;;;;;213:5;:18;;-1:-1:-1;;;;;221:10:0;213:18;-1:-1:-1;;;;;;213:18:0;;;;;;26:488;;;;;;",
-  "deployedSourceMap": "26:488:0:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;347:165;;;;;;;;;;;;;;;;;;74:36;;;;;;;;;;;;;;;;;;;;;;;;;;;50:20;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;240:103;;;;;;;;;;;;;;347:165;409:19;161:5;;147:10;161:5;147:19;;;161:5;;147:19;143:26;;;442:11;409:45;;460:8;:21;;;482:24;;460:47;;;;;;;;;;;;;;;;;;-1:-1:-1;460:47:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;143:26;347:165;;:::o;74:36::-;;;;:::o;50:20::-;;;;;;:::o;240:103::-;161:5;;147:10;161:5;147:19;;;161:5;;147:19;143:26;;;302:24;:36;;;143:26;240:103;:::o",
+  "bytecode": "0x6060604052341561000f57600080fd5b336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055506102d78061005e6000396000f300606060405260043610610062576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680630900f01014610067578063445df0ac146100a05780638da5cb5b146100c9578063fdacd5761461011e575b600080fd5b341561007257600080fd5b61009e600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610141565b005b34156100ab57600080fd5b6100b3610220565b6040518082815260200191505060405180910390f35b34156100d457600080fd5b6100dc610226565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b341561012957600080fd5b61013f600480803590602001909190505061024b565b005b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16141561021c578190508073ffffffffffffffffffffffffffffffffffffffff1663fdacd5766001546040518263ffffffff167c010000000000000000000000000000000000000000000000000000000002815260040180828152602001915050600060405180830381600087803b151561020b57600080fd5b5af1151561021857600080fd5b5050505b5050565b60015481565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614156102a857806001819055505b505600a165627a7a7230582093fae4c1ba751defe3067aac3d9131a364359382d76d234d9eb622e7fa7f74860029",
+  "deployedBytecode": "0x606060405260043610610062576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680630900f01014610067578063445df0ac146100a05780638da5cb5b146100c9578063fdacd5761461011e575b600080fd5b341561007257600080fd5b61009e600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610141565b005b34156100ab57600080fd5b6100b3610220565b6040518082815260200191505060405180910390f35b34156100d457600080fd5b6100dc610226565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b341561012957600080fd5b61013f600480803590602001909190505061024b565b005b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16141561021c578190508073ffffffffffffffffffffffffffffffffffffffff1663fdacd5766001546040518263ffffffff167c010000000000000000000000000000000000000000000000000000000002815260040180828152602001915050600060405180830381600087803b151561020b57600080fd5b5af1151561021857600080fd5b5050505b5050565b60015481565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614156102a857806001819055505b505600a165627a7a7230582093fae4c1ba751defe3067aac3d9131a364359382d76d234d9eb622e7fa7f74860029",
+  "sourceMap": "26:488:0:-;;;178:58;;;;;;;;221:10;213:5;;:18;;;;;;;;;;;;;;;;;;26:488;;;;;;",
+  "deployedSourceMap": "26:488:0:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;347:165;;;;;;;;;;;;;;;;;;;;;;;;;;;;74:36;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;50:20;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;240:103;;;;;;;;;;;;;;;;;;;;;;;;;;347:165;409:19;161:5;;;;;;;;;;;147:19;;:10;:19;;;143:26;;;442:11;409:45;;460:8;:21;;;482:24;;460:47;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;143:26;347:165;;:::o;74:36::-;;;;:::o;50:20::-;;;;;;;;;;;;;:::o;240:103::-;161:5;;;;;;;;;;;147:19;;:10;:19;;;143:26;;;329:9;302:24;:36;;;;143:26;240:103;:::o",
   "source": "pragma solidity ^0.4.21;\n\ncontract Migrations {\n  address public owner;\n  uint public last_completed_migration;\n\n  modifier restricted() {\n    if (msg.sender == owner) _;\n  }\n\n  function Migrations() public {\n    owner = msg.sender;\n  }\n\n  function setCompleted(uint completed) public restricted {\n    last_completed_migration = completed;\n  }\n\n  function upgrade(address new_address) public restricted {\n    Migrations upgraded = Migrations(new_address);\n    upgraded.setCompleted(last_completed_migration);\n  }\n}\n",
   "sourcePath": "D:\\RecordFoundation\\ico-smartcontract-record\\contracts\\Migrations.sol",
   "ast": {
@@ -182,7 +182,7 @@
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2824,
+                        "referencedDeclaration": 1919,
                         "src": "147:3:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
@@ -286,7 +286,7 @@
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2824,
+                        "referencedDeclaration": 1919,
                         "src": "221:3:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
@@ -832,7 +832,7 @@
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2824,
+                        "referencedDeclaration": 1919,
                         "src": "147:3:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
@@ -936,7 +936,7 @@
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2824,
+                        "referencedDeclaration": 1919,
                         "src": "221:3:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
@@ -1378,16 +1378,10 @@
     "1": {
       "events": {},
       "links": {},
-      "address": "0x14a76b985a0bae167666ea8d4954fae07b81d836",
-      "transactionHash": "0x8d11394057545fc7a6d3dadd12293f7428bfdeeff30127f9484dc36ee6dd331d"
-    },
-    "3": {
-      "events": {},
-      "links": {},
-      "address": "0x607bca8bd6292e05b7585a124498c8c3d1ce3e5c",
-      "transactionHash": "0xd933fd7e25941036b8206a1e3f87ac095f5557cafa49b78c2f5305825e7bc299"
+      "address": "0xfb086c90048a1e07785dfad486c096e3b05c1738",
+      "transactionHash": "0x4a2318156cca304aa20580c4a75f425653557a55db768d041848964991a075e0"
     }
   },
   "schemaVersion": "2.0.0",
-  "updatedAt": "2018-04-14T21:58:24.131Z"
+  "updatedAt": "2018-05-13T21:18:32.238Z"
 }

@@ -10,15 +10,13 @@ contract RECORDICO {
     // RCD - RECORD token contract
     RECORDToken public RCD = new RECORDToken();
     using SafeMath for uint256;
-    mapping (address => uint256) public RCDBuyers;
-    mapping (address => uint256) public ETHSenders;
 
     // Token price parameters
     // These parametes can be changed only by manager of contract
-    uint256 public Rate_Eth = 500; // Rate USD per ETH
-
+    uint256 public Rate_Eth = 690; // Rate USD per ETH
 
     // Crowdfunding parameters
+    uint256 public currentInitPart = 0;
     uint256 public constant RECORDPart = 18; // 18% of TotalSupply for Record Team
     uint256 public constant EcosystemPart = 15; // 15% of TotalSupply for Ecosystem
     uint256 public constant InvestorPart = 5; // 5% of TotalSupply for Investors
@@ -30,29 +28,22 @@ contract RECORDICO {
     uint256 public constant RoundBHardCap = 45000000 * 1e18;
     uint256 public constant RoundCHardCap = 45000000 * 1e18;
     uint256 public constant totalAmountOnICO = 300000000 * 1e18;
-    uint256 public EthGet = 0;
-    uint256 public RcdGet = 0;
 
     uint256 public PreSaleSold = 0;
     uint256 public RoundASold = 0;
     uint256 public RoundBSold = 0;
     uint256 public RoundCSold = 0;
+    uint256 public EthGet = 0;
+    uint256 public RcdGet = 0;
 
     // Output ethereum addresses
     address Company;
-    address RECORDFund;
-    address EcosystemFund;
-    address InvestorFund;
-    address AdvisorFund;
-    address BountyFund;
     address Manager; // Manager controls contract
 
     uint256 public PreSaleStartTime;
     uint256 public PreSaleCloseTime;
     uint256 public IcoStartTime;
     uint256 public IcoCloseTime;
-
-    bool distributionSuccess = false;
 
     // Allows execution by the contract manager only
     modifier managerOnly {
@@ -65,11 +56,6 @@ contract RECORDICO {
      */
     function RECORDICO(
         address _Company,
-        address _RECORDFund,
-        address _EcosystemFund,
-        address _InvestorFund,
-        address _AdvisorFund,
-        address _BountyFund,
         address _Manager,
         uint256 _PreSaleStartTime,
         uint256 _PreSaleCloseTime,
@@ -78,24 +64,12 @@ contract RECORDICO {
     )
     public {
         Company = _Company;
-        RECORDFund = _RECORDFund;
-        EcosystemFund = _EcosystemFund;
-        InvestorFund = _InvestorFund;
-        AdvisorFund = _AdvisorFund;
-        BountyFund = _BountyFund;
         Manager = _Manager;
         PreSaleStartTime = _PreSaleStartTime;
         PreSaleCloseTime = _PreSaleCloseTime;
         IcoStartTime = _IcoStartTime;
         IcoCloseTime = _IcoCloseTime;
         RCD.pause(); // ICO중에는 token transfer가 되어서는 안된다.
-    }
-    function getRCDBuyer(address _sender) external managerOnly returns(uint256) {
-        return RCDBuyers[_sender];
-    }
-
-    function getETHSender(address _sender) external managerOnly returns(uint256) {
-        return ETHSenders[_sender];
     }
 
     function getMinMaxInvest() public returns(uint256, uint256) {
@@ -111,7 +85,6 @@ contract RECORDICO {
         }
         return (_min, _max);
     }
-
     function getRcdExchange(uint256 _ethValue) public returns(uint256, bool) {
         uint256 stage = getStage();
         uint256 _rcdValue = 0;
@@ -136,10 +109,7 @@ contract RECORDICO {
         }
         return (_rcdValue, exchangeSuccess);
     }
-    function getNow() external returns(uint256){
-        return now;
-    }
-    function getStage() public returns(uint256){
+    function getStage() public returns(uint256) {
         // 0: 프리세일 전
         // 1: 프리세일 중
         // 2: 프리세일 끝 / ICO 전
@@ -196,16 +166,8 @@ contract RECORDICO {
     function setRate(uint256 _RateEth) external managerOnly {
         Rate_Eth = _RateEth;
     }
-
-    function finishIco() external managerOnly {
-        uint256 stage = getStage();
-        require(distributionSuccess == false && stage == 6);
-        RCD.mint(RECORDFund, RECORDPart.mul(totalAmountOnICO).div(100));
-        RCD.mint(EcosystemFund, EcosystemPart.mul(totalAmountOnICO).div(100));
-        RCD.mint(InvestorFund, InvestorPart.mul(totalAmountOnICO).div(100));
-        RCD.mint(AdvisorFund, AdvisorPart.mul(totalAmountOnICO).div(100));
-        RCD.mint(BountyFund, BountyPart.mul(totalAmountOnICO).div(100));
-        distributionSuccess = true;
+    function setIcoCloseTime(uint256 _IcoCloseTime) external managerOnly {
+        IcoCloseTime = _IcoCloseTime;
     }
 
     function lockAddress(address _adr) managerOnly external {
@@ -247,19 +209,23 @@ contract RECORDICO {
         bool _rcdExchangeSuccess;
         uint256 _min;
         uint256 _max;
-        uint256 stage = getStage();
 
         (_rcdValue, _rcdExchangeSuccess) = getRcdExchange(_ethValue);
         (_min, _max) = getMinMaxInvest();
         require (
             _rcdExchangeSuccess == true &&
             _min <= _rcdValue &&
-            _rcdValue <= _max && (
-                stage == 1 ||
-                stage == 3 ||
-                stage == 4 ||
-                stage == 5
-            )
+            _rcdValue <= _max
+        );
+        mintICOTokens(_investor, _rcdValue, _ethValue);
+    }
+    function mintICOTokens(address _investor, uint256 _rcdValue, uint256 _ethValue) internal{
+        uint256 stage = getStage();
+        require (
+            stage == 1 ||
+            stage == 3 ||
+            stage == 4 ||
+            stage == 5
         );
         if (stage == 1) {
             require(PreSaleSold.add(_rcdValue) <= PreSaleHardCap);
@@ -271,7 +237,6 @@ contract RECORDICO {
             } else {
                 RoundBSold = RoundASold.add(_rcdValue) - RoundAHardCap;
                 RoundASold = RoundAHardCap;
-                Company.transfer(address(this).balance);
             }
         }
         if (stage == 4) {
@@ -280,7 +245,6 @@ contract RECORDICO {
             } else {
                 RoundCSold = RoundBSold.add(_rcdValue) - RoundBHardCap;
                 RoundBSold = RoundBHardCap;
-                Company.transfer(address(this).balance);
             }
         }
         if (stage == 5) {
@@ -288,22 +252,29 @@ contract RECORDICO {
             RoundCSold = RoundCSold.add(_rcdValue);
         }
         RCD.mint(_investor, _rcdValue);
-        EthGet = EthGet.add(_ethValue);
         RcdGet = RcdGet.add(_rcdValue);
-        RCDBuyers[_investor] = RCDBuyers[_investor].add(_rcdValue);
-        ETHSenders[_investor] = ETHSenders[_investor].add(_ethValue);
+        EthGet = EthGet.add(_ethValue);
+    }
+
+    function mintICOTokensFromExternal(address _investor, uint256 _rcdValue) external managerOnly{
+        mintICOTokens(_investor, _rcdValue, 0);
     }
 
     /*
      *   @dev Allows Company withdraw investments when round is over
     */
     function withdrawEther() external managerOnly{
-        // PreSale기간이 끝나거나,
-        // ICO기간이 끝나야 인출 가능
-        // 각 Round가 끝나면, 다음 Round의 준비 및 서비스 출시 준비를 위해 인출 가능
-        uint256 stage = getStage();
-        require (stage == 2 || stage == 6);
         Company.transfer(address(this).balance);
+    }
+
+    function mintInitialTokens(address _adr, uint256 rate) external managerOnly {
+        require (currentInitPart.add(rate) <= 50);
+        RCD.mint(_adr, rate.mul(totalAmountOnICO).div(100));
+        currentInitPart = currentInitPart.add(rate);
+    }
+
+    function transferOwnership(address newOwner) external managerOnly{
+        RCD.transferOwnership(newOwner);
     }
 }
 
